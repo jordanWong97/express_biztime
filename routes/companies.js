@@ -64,6 +64,7 @@ router.post('/', async function (req, res, next) {
 router.put('/:code', async function (req, res, next) {
   //what does this line do?
   if ("code" in req.body) throw new BadRequestError("Not allowed");
+  //TODO: if user does not input description/name
 
   const code = req.params.code;
   const results = await db.query(
