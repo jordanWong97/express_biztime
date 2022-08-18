@@ -3,7 +3,6 @@ const { NotFoundError, BadRequestError } = require("../expressError");
 
 const router = new express.Router();
 const db = require("../db");
-const { json } = require("express");
 
 /** Returns a list of all invoices in invoices table in JSON format */
 
@@ -73,9 +72,9 @@ router.post('/', async function (req, res, next) {
 
 router.put('/:id', async function (req, res, next) {
   if ("id" in req.body) throw new BadRequestError("Not allowed");
-  if (!req.body.amt || req.body.amt < 0)
+  if (req.body.amt === undefined || req.body.amt <= 0)
     throw new BadRequestError("must enter valid amt");
-
+//req.body.amt can set variable
   const id = req.params.id;
   const results = await db.query(
     `UPDATE invoices
@@ -108,8 +107,8 @@ router.delete('/:id', async function (req, res, next) {
 
   const invoice = results.rows[0];
 
-  if (!invoice) throw new NotFoundError(`No matching invoice: ${invoice}`);
-  return res.json({ message: 'invoice deleted' });
+  if (!invoice) throw new NotFoundError(`No matching invoice: ${id}`);
+  return res.json({ status: 'deleted' });
 
 });
 

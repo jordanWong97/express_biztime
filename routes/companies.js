@@ -62,7 +62,6 @@ router.post('/', async function (req, res, next) {
 */
 
 router.put('/:code', async function (req, res, next) {
-  //what does this line do?
   if ("code" in req.body) throw new BadRequestError("Not allowed");
   //TODO: if user does not input description/name
 
@@ -123,7 +122,7 @@ router.get('/:code', async function (req, res, next) {
     WHERE comp_code = $1`,
     [code]
   );
-  company.invoices = iResult.rows.map(i => i)
+  company.invoices = iResult.rows
 
   if (!company) throw new NotFoundError(`No matching company: ${code}`);
   return res.json({ company });
