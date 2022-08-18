@@ -4,9 +4,11 @@ const express = require("express");
 const { NotFoundError } = require("./expressError");
 
 const app = express();
+const companiesRoutes = require("./routes/companies");
 
 app.use(express.json());
 
+app.use("/companies", companiesRoutes);
 
 /** 404 handler: matches unmatched routes; raises NotFoundError. */
 app.use(function (req, res, next) {
