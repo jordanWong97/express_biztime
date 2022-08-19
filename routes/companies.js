@@ -122,7 +122,7 @@ router.get('/:code', async function (req, res, next) {
     WHERE comp_code = $1`,
     [code]
   );
-  company.invoices = iResult.rows
+  company.invoices = iResult.rows;
 
   if (!company) throw new NotFoundError(`No matching company: ${code}`);
   return res.json({ company });
